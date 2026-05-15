@@ -31,7 +31,10 @@ export default function InfrastructurePage() {
   const [throughput, setThroughput] = useState(1.24);
   const [activeConns, setActiveConns] = useState(8_421);
 
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
     const t = setInterval(() => {
       setThroughput(v => Math.max(0.8, Math.min(2.0, v + (Math.random() * 0.1 - 0.05))));
       setActiveConns(v => Math.max(8000, Math.min(9000, v + Math.floor(Math.random() * 40 - 20))));
@@ -115,7 +118,7 @@ export default function InfrastructurePage() {
                 <div key={v} className="absolute w-full border-t border-white/5" style={{ bottom: `${v}%` }} />
               ))}
             </div>
-            {[...Array(window.innerWidth < 640 ? 24 : 48)].map((_, i) => {
+            {mounted && [...Array(window.innerWidth < 640 ? 24 : 48)].map((_, i) => {
               const h = 20 + Math.sin(i / 3) * 20 + Math.random() * 40;
               return (
                 <motion.div

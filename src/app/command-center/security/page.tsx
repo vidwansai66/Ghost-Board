@@ -59,6 +59,8 @@ export default function SecurityPage() {
   const threatLabels = ["MINIMAL", "LOW", "MODERATE", "ELEVATED", "CRITICAL"];
   const threatBg = ["bg-emerald-500/10", "bg-emerald-400/10", "bg-yellow-400/10", "bg-orange-400/10", "bg-red-500/10"];
   const threatBorder = ["border-emerald-500/20", "border-emerald-400/20", "border-yellow-400/20", "border-orange-400/20", "border-red-500/20"];
+
+  return (
     <div className="min-h-screen">
       <header className="h-20 border-b border-white/10 flex items-center justify-between px-6 sm:px-10 bg-black/40 backdrop-blur-md sticky top-0 z-40">
         <div className="flex flex-col">

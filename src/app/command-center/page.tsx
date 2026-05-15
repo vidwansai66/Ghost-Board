@@ -189,9 +189,9 @@ export default function CommandCenter() {
   );
 }
 
-function LiveStatItem({ label, value, color }: { label: string; value: string; color: string }) {
+function LiveStatItem({ label, value, color, className = "" }: { label: string; value: string; color: string; className?: string }) {
   return (
-    <div className="flex flex-col items-end">
+    <div className={`flex flex-col items-end ${className}`}>
       <span className="text-[9px] font-bold text-gray-500 tracking-tighter uppercase">{label}</span>
       <motion.span
         animate={{ opacity: [0.8, 1, 0.8] }}

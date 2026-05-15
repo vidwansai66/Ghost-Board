@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Activity, BarChart3, Globe, LayoutGrid, LogOut, Settings, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
