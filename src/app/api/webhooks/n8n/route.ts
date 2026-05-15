@@ -32,12 +32,12 @@ import { N8nWebhookPayload } from "@/lib/api/types";
 const latestEvents = new Map<string, N8nWebhookPayload>();
 
 /** Returns the latest payload for a given event type (used by SSE routes) */
-export function getLatestEvent(eventType: string): N8nWebhookPayload | undefined {
+function getLatestEvent(eventType: string): N8nWebhookPayload | undefined {
   return latestEvents.get(eventType);
 }
 
 /** Returns all recent events (used by SSE stream to initialize client) */
-export function getAllLatestEvents(): N8nWebhookPayload[] {
+function getAllLatestEvents(): N8nWebhookPayload[] {
   return Array.from(latestEvents.values());
 }
 
