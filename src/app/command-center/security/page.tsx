@@ -59,32 +59,30 @@ export default function SecurityPage() {
   const threatLabels = ["MINIMAL", "LOW", "MODERATE", "ELEVATED", "CRITICAL"];
   const threatBg = ["bg-emerald-500/10", "bg-emerald-400/10", "bg-yellow-400/10", "bg-orange-400/10", "bg-red-500/10"];
   const threatBorder = ["border-emerald-500/20", "border-emerald-400/20", "border-yellow-400/20", "border-orange-400/20", "border-red-500/20"];
-
-  return (
     <div className="min-h-screen">
-      <header className="h-20 border-b border-white/10 flex items-center justify-between px-10 bg-black/40 backdrop-blur-md sticky top-0 z-40">
+      <header className="h-20 border-b border-white/10 flex items-center justify-between px-6 sm:px-10 bg-black/40 backdrop-blur-md sticky top-0 z-40">
         <div className="flex flex-col">
-          <h1 className="text-xl font-black tracking-tighter">
+          <h1 className="text-sm sm:text-xl font-black tracking-tighter">
             GHOST_BOARD // <span className="text-destructive">SEC_CENTER</span>
           </h1>
-          <span className="text-[10px] font-mono text-destructive/60 tracking-widest uppercase">Autonomous Cyber Defense & Threat Intelligence</span>
+          <span className="text-[10px] font-mono text-destructive/60 tracking-widest uppercase">Autonomous Cyber Defense</span>
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 text-[10px] font-mono">
             <Eye className="w-4 h-4 text-destructive animate-pulse" />
-            <span className="text-gray-400">BREACH ATTEMPTS BLOCKED:</span>
-            <span className="text-destructive font-black text-lg">{breachAttempts.toLocaleString()}</span>
+            <span className="text-gray-400 hidden sm:inline uppercase">BLOCKED:</span>
+            <span className="text-destructive font-black text-base sm:text-lg">{breachAttempts.toLocaleString()}</span>
           </div>
         </div>
       </header>
 
-      <div className="p-8 space-y-8 max-w-[1800px] mx-auto">
+      <div className="p-4 sm:p-8 space-y-6 sm:y-8 max-w-[1800px] mx-auto overflow-x-hidden">
 
         {/* Threat Overview Row */}
-        <div className="grid grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 sm:gap-6">
 
           {/* Big Threat Level */}
-          <GlassCard className={`col-span-4 ${threatBg[threatLevel]} border ${threatBorder[threatLevel]} relative overflow-hidden`}>
+          <GlassCard className={`col-span-1 md:col-span-2 lg:col-span-4 ${threatBg[threatLevel]} border ${threatBorder[threatLevel]} relative overflow-hidden p-4 sm:p-6`}>
             <motion.div
               animate={{ opacity: [0.05, 0.15, 0.05] }}
               transition={{ repeat: Infinity, duration: 2 }}
@@ -92,52 +90,52 @@ export default function SecurityPage() {
             />
             <div className="flex items-center gap-2 mb-4">
               <ShieldAlert className={`w-4 h-4 ${threatColors[threatLevel]} animate-pulse`} />
-              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Global Threat Level</span>
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Threat Level</span>
             </div>
             <div className="flex flex-col items-center py-4">
-              <div className={`text-8xl font-black ${threatColors[threatLevel]} leading-none`}>
+              <div className={`text-6xl sm:text-8xl font-black ${threatColors[threatLevel]} leading-none`}>
                 0{threatLevel + 1}
               </div>
-              <div className={`text-xl font-black mt-2 ${threatColors[threatLevel]}`}>
+              <div className={`text-lg sm:text-xl font-black mt-2 ${threatColors[threatLevel]}`}>
                 {threatLabels[threatLevel]}
               </div>
-              <div className="mt-4 flex gap-2">
+              <div className="mt-4 flex gap-1.5">
                 {[0,1,2,3,4].map(i => (
-                  <div key={i} className={`w-6 h-2 rounded-full ${i <= threatLevel ? threatBg[i].replace('/10', '/60') : 'bg-white/5'}`} />
+                  <div key={i} className={`w-5 sm:w-6 h-1.5 sm:h-2 rounded-full ${i <= threatLevel ? threatBg[i].replace('/10', '/60') : 'bg-white/5'}`} />
                 ))}
               </div>
             </div>
           </GlassCard>
 
           {/* Security Stats */}
-          <div className="col-span-4 grid grid-rows-2 gap-4">
-            <GlassCard className="bg-black/60 border-white/10 flex items-center gap-4">
-              <ShieldCheck className="w-10 h-10 text-emerald-500" />
+          <div className="col-span-1 lg:col-span-4 grid grid-rows-2 gap-4">
+            <GlassCard className="bg-black/60 border-white/10 flex items-center gap-4 p-4">
+              <ShieldCheck className="w-8 h-8 sm:w-10 sm:h-10 text-emerald-500" />
               <div>
-                <div className="text-3xl font-black text-white">{integrity.toFixed(3)}%</div>
-                <div className="text-[10px] text-gray-500 font-mono uppercase tracking-widest">Security Integrity Score</div>
+                <div className="text-2xl sm:text-3xl font-black text-white">{integrity.toFixed(3)}%</div>
+                <div className="text-[9px] sm:text-[10px] text-gray-500 font-mono uppercase tracking-widest">Integrity Score</div>
               </div>
             </GlassCard>
-            <GlassCard className="bg-black/60 border-white/10 flex items-center gap-4">
-              <Lock className="w-10 h-10 text-primary" />
+            <GlassCard className="bg-black/60 border-white/10 flex items-center gap-4 p-4">
+              <Lock className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
               <div>
-                <div className="text-3xl font-black text-white">4,096-bit</div>
-                <div className="text-[10px] text-gray-500 font-mono uppercase tracking-widest">Active Encryption Grade</div>
+                <div className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tighter">4,096-bit</div>
+                <div className="text-[9px] sm:text-[10px] text-gray-500 font-mono uppercase tracking-widest">Active Grade</div>
               </div>
             </GlassCard>
           </div>
 
           {/* Protocol Status */}
-          <GlassCard className="col-span-4 bg-black/60 border-white/10">
+          <GlassCard className="col-span-1 md:col-span-2 lg:col-span-4 bg-black/60 border-white/10 p-4 sm:p-6">
             <div className="flex items-center gap-2 mb-4">
               <Radio className="w-4 h-4 text-primary" />
-              <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Active Security Protocols</h3>
+              <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Security Protocols</h3>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-2.5 sm:space-y-3">
               {PROTOCOLS.map(proto => (
                 <div key={proto.name} className="flex items-center justify-between">
-                  <span className="text-[9px] font-mono text-gray-400">{proto.name}</span>
-                  <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded text-[8px] font-bold ${
+                  <span className="text-[8px] sm:text-[9px] font-mono text-gray-400 uppercase tracking-tighter sm:tracking-normal">{proto.name}</span>
+                  <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[7px] sm:text-[8px] font-bold ${
                     proto.active
                       ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
                       : 'bg-gray-500/10 text-gray-500 border border-gray-500/20'
@@ -152,32 +150,34 @@ export default function SecurityPage() {
         </div>
 
         {/* Live Event Log */}
-        <GlassCard className="bg-black/60 border-destructive/10">
+        <GlassCard className="bg-black/60 border-destructive/10 p-4 sm:p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Skull className="w-4 h-4 text-destructive" />
-              <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Live Security Event Timeline</h3>
+              <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Security Event Timeline</h3>
             </div>
             <div className="flex items-center gap-2">
-              <motion.div animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1 }} className="w-2 h-2 bg-destructive rounded-full" />
-              <span className="text-[9px] font-mono text-gray-500">REAL-TIME FEED</span>
+              <motion.div animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1 }} className="w-1.5 h-1.5 bg-destructive rounded-full" />
+              <span className="text-[8px] font-mono text-gray-500 uppercase tracking-widest">Live Feed</span>
             </div>
           </div>
-          <div className="space-y-2 max-h-80 overflow-y-auto custom-scrollbar">
+          <div className="space-y-1.5 sm:space-y-2 max-h-80 sm:max-h-96 overflow-y-auto custom-scrollbar pr-2">
             <AnimatePresence initial={false}>
               {events.map(ev => (
                 <motion.div
                   key={ev.id}
-                  initial={{ opacity: 0, height: 0, y: -10 }}
-                  animate={{ opacity: 1, height: 'auto', y: 0 }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex items-center gap-4 p-2 bg-white/3 border border-white/5 rounded font-mono text-[10px]"
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.2 }}
+                  className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 p-2 sm:p-2.5 bg-white/3 border border-white/5 rounded font-mono text-[9px] sm:text-[10px]"
                 >
-                  <span className="text-gray-600 flex-shrink-0">{ev.time}</span>
-                  <span className={`flex-shrink-0 font-black w-10 ${ev.color}`}>{ev.type}</span>
-                  <span className="text-gray-400 flex-1">{ev.message}</span>
-                  <span className="text-gray-600 flex-shrink-0">[{ev.src}]</span>
+                  <div className="flex items-center justify-between sm:justify-start gap-3">
+                    <span className="text-gray-600 font-bold">{ev.time}</span>
+                    <span className={`font-black uppercase w-8 ${ev.color}`}>{ev.type}</span>
+                  </div>
+                  <span className="text-gray-400 flex-1 leading-relaxed">{ev.message}</span>
+                  <span className="text-gray-600 hidden md:inline">[{ev.src}]</span>
                 </motion.div>
               ))}
             </AnimatePresence>

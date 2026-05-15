@@ -3,10 +3,13 @@
 import { CommandSidebar } from "@/components/layout/command-sidebar";
 import { GhostProvider } from "@/store/ghost-store";
 import { AnimatePresence, motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 export default function CommandCenterLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <GhostProvider>
@@ -16,11 +19,21 @@ export default function CommandCenterLayout({ children }: { children: React.Reac
         <div className="fixed inset-0 hero-gradient opacity-30 pointer-events-none z-0" />
         <div className="scanline" />
 
-        {/* Sidebar — always visible */}
-        <CommandSidebar />
+        {/* Sidebar */}
+        <CommandSidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+
+        {/* Mobile Nav Trigger */}
+        <div className="fixed top-4 right-4 z-[60] lg:hidden">
+          <button 
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            className="w-12 h-12 rounded-xl bg-black/80 backdrop-blur-xl border border-primary/20 flex items-center justify-center text-primary shadow-[0_0_20px_rgba(0,242,255,0.2)] active:scale-90 transition-all"
+          >
+            {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
 
         {/* Animated Page Content */}
-        <main className="pl-20 min-h-screen relative z-10">
+        <main className={`transition-all duration-500 min-h-screen relative z-10 ${isSidebarOpen ? "blur-sm lg:blur-0" : ""} lg:pl-20`}>
           <AnimatePresence mode="wait">
             <motion.div
               key={pathname}

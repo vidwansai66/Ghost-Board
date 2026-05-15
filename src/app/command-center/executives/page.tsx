@@ -36,43 +36,42 @@ export default function ExecutivesPage() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="h-20 border-b border-white/10 flex items-center justify-between px-10 bg-black/40 backdrop-blur-md sticky top-0 z-40">
+      <header className="h-20 border-b border-white/10 flex items-center justify-between px-6 sm:px-10 bg-black/40 backdrop-blur-md sticky top-0 z-40">
         <div className="flex flex-col">
-          <h1 className="text-xl font-black tracking-tighter">
+          <h1 className="text-sm sm:text-xl font-black tracking-tighter">
             GHOST_BOARD // <span className="text-secondary">EXEC_BOARD</span>
           </h1>
           <span className="text-[10px] font-mono text-secondary/60 tracking-widest uppercase">Autonomous Executive Intelligence Matrix</span>
         </div>
-        <div className="flex items-center gap-6">
+        <div className="hidden sm:flex items-center gap-6">
           <div className="flex flex-col items-end">
-            <span className="text-[9px] text-gray-500 font-mono uppercase">Total AI-to-AI Comms Today</span>
+            <span className="text-[9px] text-gray-500 font-mono uppercase">Total Comms Today</span>
             <span className="text-lg font-black text-secondary">{commsCount.toLocaleString()}</span>
           </div>
-          <div className="px-3 py-1.5 bg-secondary/10 border border-secondary/20 rounded text-[10px] font-mono text-secondary animate-pulse">
+          <div className="px-3 py-1.5 bg-secondary/10 border border-secondary/20 rounded text-[10px] font-mono text-secondary animate-pulse hidden md:block">
             ALL EXECUTIVES ONLINE
           </div>
         </div>
       </header>
 
-      <div className="p-8 space-y-8 max-w-[1800px] mx-auto">
+      <div className="p-4 sm:p-8 space-y-8 max-w-[1800px] mx-auto overflow-x-hidden">
 
         {/* AI Hierarchy Banner */}
-        <GlassCard className="bg-black/60 border-secondary/20 p-6">
-          <div className="flex items-center gap-2 mb-4">
+        <GlassCard className="bg-black/60 border-secondary/20 p-4 sm:p-6 overflow-x-auto custom-scrollbar">
+          <div className="flex items-center gap-2 mb-4 sticky left-0">
             <Crown className="w-4 h-4 text-secondary" />
-            <h2 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Executive Hierarchy & Command Chain</h2>
+            <h2 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Command Chain</h2>
           </div>
-          <div className="flex items-center justify-center gap-4 flex-wrap">
-            {/* CEO at top */}
+          <div className="flex flex-col items-center min-w-[600px] sm:min-w-0">
             <div className="flex flex-col items-center">
-              <div className="px-4 py-2 bg-white/10 border border-white/30 rounded text-xs font-black text-white glow-text">CEO AI</div>
+              <div className="px-6 py-2 bg-white/10 border border-white/30 rounded text-xs font-black text-white glow-text uppercase tracking-widest">CEO AI</div>
               <div className="w-px h-6 bg-white/20 mt-1" />
             </div>
-            <div className="flex items-end gap-8 mt-2">
+            <div className="flex items-end gap-4 sm:gap-8 mt-2">
               {EXECUTIVES.slice(1).map((exec, i) => (
                 <div key={exec.name} className="flex flex-col items-center">
                   <div className="w-px h-6 bg-white/10" />
-                  <div className={`px-3 py-1.5 border rounded text-[9px] font-bold whitespace-nowrap ${
+                  <div className={`px-3 py-1.5 border rounded text-[9px] font-bold whitespace-nowrap uppercase tracking-tighter ${
                     exec.color === 'cyan' ? 'border-primary/40 text-primary bg-primary/5' :
                     exec.color === 'violet' ? 'border-secondary/40 text-secondary bg-secondary/5' :
                     exec.color === 'green' ? 'border-emerald-500/40 text-emerald-500 bg-emerald-500/5' :
@@ -88,18 +87,18 @@ export default function ExecutivesPage() {
         </GlassCard>
 
         {/* Stats Row */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { label: "TOTAL ACTIVE WORKFLOWS", value: "197", icon: Zap, color: "text-primary" },
-            { label: "AI-TO-AI CHANNELS", value: "15", icon: Network, color: "text-secondary" },
-            { label: "DECISIONS / MINUTE", value: "2,840", icon: Brain, color: "text-accent" },
-            { label: "EXECUTIVE AGENTS", value: "6/6", icon: Users, color: "text-emerald-500" },
+            { label: "WORKFLOWS", value: "197", icon: Zap, color: "text-primary" },
+            { label: "CHANNELS", value: "15", icon: Network, color: "text-secondary" },
+            { label: "DECISIONS", value: "2.8K", icon: Brain, color: "text-accent" },
+            { label: "AGENTS", value: "6/6", icon: Users, color: "text-emerald-500" },
           ].map((stat) => (
-            <GlassCard key={stat.label} className="bg-black/60 border-white/10 p-4 flex items-center gap-4">
-              <stat.icon className={`w-8 h-8 ${stat.color} flex-shrink-0`} />
+            <GlassCard key={stat.label} className="bg-black/60 border-white/10 p-4 flex items-center gap-3 sm:gap-4">
+              <stat.icon className={`w-6 h-6 sm:w-8 sm:h-8 ${stat.color} flex-shrink-0`} />
               <div>
-                <div className="text-2xl font-black">{stat.value}</div>
-                <div className="text-[9px] font-bold text-gray-500 uppercase tracking-widest">{stat.label}</div>
+                <div className="text-xl sm:text-2xl font-black">{stat.value}</div>
+                <div className="text-[8px] sm:text-[9px] font-bold text-gray-500 uppercase tracking-widest">{stat.label}</div>
               </div>
             </GlassCard>
           ))}
@@ -109,14 +108,15 @@ export default function ExecutivesPage() {
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Layers className="w-4 h-4 text-secondary" />
-            <h2 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Full Executive Profile Matrix</h2>
+            <h2 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Profile Matrix</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
             {EXECUTIVES.map((exec, i) => (
               <motion.div
                 key={exec.name}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ delay: i * 0.07 }}
               >
                 <ExecutiveCard {...exec as any} />
@@ -126,10 +126,10 @@ export default function ExecutivesPage() {
         </div>
 
         {/* Communication Feed */}
-        <div className="h-[400px]">
+        <div className="h-[400px] sm:h-[500px] lg:h-[600px]">
           <div className="flex items-center gap-2 mb-4">
             <MessageSquare className="w-4 h-4 text-secondary" />
-            <h2 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Live Executive Communication Feed</h2>
+            <h2 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Live Interaction Feed</h2>
           </div>
           <CollabPanel />
         </div>

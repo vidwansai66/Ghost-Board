@@ -44,7 +44,7 @@ export default function CommandCenter() {
   return (
     <div className="min-h-screen bg-black">
       {/* Header */}
-      <header className="h-16 border-b border-white/10 flex items-center justify-between px-4 sm:px-6 bg-black/50 backdrop-blur-md sticky top-0 z-40">
+      <header className="h-16 border-b border-white/10 flex items-center justify-between px-4 sm:px-10 bg-black/50 backdrop-blur-md sticky top-0 z-40">
         <div className="flex items-center gap-2 sm:gap-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 border border-primary/50 rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(0,242,255,0.2)]">
@@ -55,7 +55,7 @@ export default function CommandCenter() {
                 <h1 className="text-sm sm:text-xl font-black tracking-tighter text-white">{ENTERPRISE_CONFIG.companyName.toUpperCase()}</h1>
                 <span className="hidden sm:inline text-[8px] font-black px-1.5 py-0.5 bg-primary/10 border border-primary/30 text-primary rounded tracking-widest">ENTERPRISE</span>
               </div>
-              <div className="hidden sm:flex items-center gap-3">
+              <div className="hidden lg:flex items-center gap-3">
                 <span className="text-[9px] font-mono text-gray-500 uppercase tracking-widest flex items-center gap-1">
                   <Globe2 className="w-2.5 h-2.5" /> {ENTERPRISE_CONFIG.industry} // {ENTERPRISE_CONFIG.headquarters}
                 </span>
@@ -63,9 +63,9 @@ export default function CommandCenter() {
             </div>
           </div>
           
-          <div className="hidden sm:block h-8 w-px bg-white/10 mx-2" />
+          <div className="hidden lg:block h-8 w-px bg-white/10 mx-2" />
 
-          <div className="hidden lg:flex flex-col">
+          <div className="hidden xl:flex flex-col">
             <h1 className="text-[10px] font-black tracking-[0.2em] text-gray-400">GHOST_BOARD // OS</h1>
             <div className="flex items-center gap-3 mt-0.5">
               <span className="text-[9px] font-mono text-primary/60 tracking-widest uppercase">System v4.0.2</span>
@@ -85,18 +85,18 @@ export default function CommandCenter() {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 sm:gap-8">
-          <div className="hidden md:flex gap-6 items-center">
+        <div className="flex items-center gap-3 sm:gap-8">
+          <div className="hidden sm:flex gap-4 sm:gap-6 items-center">
             <LiveStatItem label="SYSTEM_LOAD" value={`${systemLoad.toFixed(1)}%`}
               color={systemLoad > 70 ? "text-destructive" : "text-gray-300"} />
             <LiveStatItem label="NET_LATENCY" value={`${netLatency.toFixed(0)}ms`}
               color={netLatency > 50 ? "text-orange-500" : "text-gray-300"} />
             <LiveStatItem label="SEC_INTEGRITY" value={`${secIntegrity.toFixed(1)}%`}
-              color="text-emerald-500" />
+              color="text-emerald-500" className="hidden md:flex" />
           </div>
-          <div className="flex items-center gap-3 sm:gap-4 border-l border-white/10 pl-4 sm:pl-6">
+          <div className="flex items-center gap-2 sm:gap-4 border-l border-white/10 pl-3 sm:pl-6">
             <div className="hidden sm:flex flex-col items-end">
-              <span className="text-[10px] font-bold">EXECUTIVE_LINK</span>
+              <span className="text-[10px] font-bold">LINK</span>
               <span className="text-[8px] font-mono text-emerald-500 animate-pulse uppercase">ENCRYPTED</span>
             </div>
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-primary/50 p-1 relative">
@@ -113,28 +113,30 @@ export default function CommandCenter() {
         </div>
       </header>
 
-      <main className="p-3 space-y-4 w-full max-w-full">
-        <div className="grid grid-cols-12 gap-4">
+      <main className="p-4 sm:p-6 lg:p-8 space-y-6 w-full max-w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
           {/* LEFT COLUMN (70% - col-span-8) */}
-          <div className="col-span-12 lg:col-span-8 flex flex-col gap-4">
+          <div className="col-span-1 lg:col-span-8 flex flex-col gap-6 order-2 lg:order-1">
             
             {/* SECTION 1: Crisis Controls & Main Output */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.4 }}
             >
               <CrisisOrchestrationPanel />
             </motion.div>
 
             {/* SECTION 2: AI Executive Board (3-Column Grid) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {EXECUTIVES.map((exec, i) => (
                 <motion.div
                   key={exec.name}
                   initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
                   transition={{ delay: i * 0.04 }}
                 >
                   <ExecutiveCard {...exec as any} />
@@ -147,9 +149,9 @@ export default function CommandCenter() {
           </div>
 
           {/* RIGHT COLUMN (30% - col-span-4) */}
-          <div className="col-span-12 lg:col-span-4 flex flex-col gap-4">
+          <div className="col-span-1 lg:col-span-4 flex flex-col gap-6 order-1 lg:order-2">
             {/* 1. Live Executive Feed */}
-            <div className="min-h-[420px] flex-1">
+            <div className="min-h-[420px] lg:h-[calc(100vh-16rem)] sticky top-24">
               <CollabPanel />
             </div>
 
@@ -166,13 +168,13 @@ export default function CommandCenter() {
       </main>
 
       {/* Live Footer */}
-      <footer className="p-8 border-t border-white/5 flex items-center justify-between text-gray-600 font-mono text-[10px]">
-        <div className="flex gap-10">
-          <span>COORD_LAT: 35.6895° N, 139.6917° E</span>
+      <footer className="p-6 sm:p-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between text-gray-600 font-mono text-[10px] gap-6">
+        <div className="flex flex-wrap justify-center md:justify-start gap-4 sm:gap-10">
+          <span className="hidden sm:inline">COORD_LAT: 35.6895° N, 139.6917° E</span>
           <motion.span animate={{ opacity: [0.6, 1, 0.6] }} transition={{ duration: 1, repeat: Infinity }}>
             SYSTEM_UPTIME: {uptimeStr}
           </motion.span>
-          <motion.span animate={{ opacity: [0.6, 1, 0.6] }} transition={{ duration: 2, repeat: Infinity }}>
+          <motion.span animate={{ opacity: [0.6, 1, 0.6] }} transition={{ duration: 2, repeat: Infinity }} className="hidden sm:inline">
             DATA_THROUGHPUT: {dataThru.toFixed(1)} PB/S
           </motion.span>
         </div>
@@ -180,7 +182,7 @@ export default function CommandCenter() {
           <motion.div animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.4, repeat: Infinity }}>
             <Radio className="w-3 h-3 text-emerald-500" />
           </motion.div>
-          <span className="text-emerald-600">POWERED_BY_GHOST_CORE_NEURAL_PROCESSING</span>
+          <span className="text-emerald-600 text-center md:text-right uppercase tracking-widest">GHOST_CORE_NEURAL_PROCESSING_ACTIVE</span>
         </div>
       </footer>
     </div>
