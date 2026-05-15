@@ -355,10 +355,10 @@ function CommandCenterRenderer({ content }: { content: string }) {
         newSections.push({ title: "Strategic Overview", body: boldSections[0].trim() });
         startIndex = 1;
       }
-      
+
       for (let i = startIndex; i < boldSections.length; i += 2) {
         if (i + 1 < boldSections.length) {
-          newSections.push({ title: boldSections[i].trim(), body: boldSections[i+1].trim() });
+          newSections.push({ title: boldSections[i].trim(), body: boldSections[i + 1].trim() });
         } else {
           // If odd number remains, append to last body or create final summary
           if (newSections.length > 0) {
@@ -378,12 +378,12 @@ function CommandCenterRenderer({ content }: { content: string }) {
     <div className="space-y-4">
       {sections.map((section, idx) => {
         const title = section.title.toLowerCase();
-        
+
         // 1. SUMMARY / DIRECTIVES
         if (title.includes("summary") || title.includes("overview") || title.includes("directive") || title.includes("goal")) {
           return <SummaryCard key={idx} body={section.body} />;
         }
-        
+
         // 2. PRIORITIES / RISKS / THREATS
         if (title.includes("priorit") || title.includes("risk") || title.includes("threat") || title.includes("alert") || title.includes("protocol")) {
           return (
@@ -395,7 +395,7 @@ function CommandCenterRenderer({ content }: { content: string }) {
             </div>
           );
         }
-        
+
         // 3. PIPELINE / ACTIONS / STRATEGY
         if (title.includes("pipeline") || title.includes("action") || title.includes("step") || title.includes("strategy") || title.includes("roadmap") || title.includes("execution") || title.includes("recovery")) {
           return (
@@ -407,7 +407,7 @@ function CommandCenterRenderer({ content }: { content: string }) {
             </div>
           );
         }
-        
+
         // 4. ANALYSIS / TECHNICAL / INFRASTRUCTURE
         if (title.includes("analysis") || title.includes("technical") || title.includes("health") || title.includes("infra") || title.includes("data") || title.includes("gateway") || title.includes("database") || title.includes("specs")) {
           return (
@@ -419,7 +419,7 @@ function CommandCenterRenderer({ content }: { content: string }) {
             </div>
           );
         }
-        
+
         // 5. STABILIZATION / METRICS / STATUS
         if (title.includes("stabiliz") || title.includes("metrics") || title.includes("eta") || title.includes("status") || title.includes("confidence")) {
           return (
@@ -431,7 +431,7 @@ function CommandCenterRenderer({ content }: { content: string }) {
             </div>
           );
         }
-        
+
         // 6. OPERATIONAL FEED / LOGS
         if (title.includes("feed") || title.includes("update") || title.includes("live") || title.includes("log") || title.includes("transmission")) {
           return (
@@ -446,10 +446,10 @@ function CommandCenterRenderer({ content }: { content: string }) {
 
         // 7. INTELLIGENCE PANEL (Fallback for CEO, Security specific headers)
         return (
-          <IntelligencePanel 
-            key={idx} 
-            title={section.title} 
-            body={section.body} 
+          <IntelligencePanel
+            key={idx}
+            title={section.title}
+            body={section.body}
             icon={title.includes("ceo") ? Target : title.includes("security") ? Shield : title.includes("cto") ? Binary : Info}
             color={title.includes("ceo") ? "text-white" : title.includes("security") ? "text-destructive" : "text-gray-500"}
           />
@@ -463,12 +463,12 @@ function ExecutiveResponseCard({ response }: {
   response: { id: string; name: string; role: string; icon: string; color: string; content: string; arrivedAt: number };
 }) {
   const timestamp = new Date(response.arrivedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-  
+
   // Try to detect severity from content
-  const severity = response.content.toLowerCase().includes("critical") ? "CRITICAL" 
-                 : response.content.toLowerCase().includes("high") ? "HIGH" 
-                 : response.content.toLowerCase().includes("medium") ? "MEDIUM" 
-                 : "LOW";
+  const severity = response.content.toLowerCase().includes("critical") ? "CRITICAL"
+    : response.content.toLowerCase().includes("high") ? "HIGH"
+      : response.content.toLowerCase().includes("medium") ? "MEDIUM"
+        : "LOW";
 
   return (
     <motion.div
@@ -479,7 +479,7 @@ function ExecutiveResponseCard({ response }: {
       <div className="relative p-0.5 rounded-3xl border border-white/10 bg-black/40 backdrop-blur-2xl group overflow-hidden">
         {/* Animated Glow */}
         <div className="absolute -inset-40 bg-[radial-gradient(circle_at_center,var(--glow-color)_0%,transparent_60%)] opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-1000 pointer-events-none"
-             style={{ '--glow-color': response.color.includes('primary') ? '#00f2ff' : response.color.includes('secondary') ? '#7000ff' : '#ffffff' } as any} />
+          style={{ '--glow-color': response.color.includes('primary') ? '#00f2ff' : response.color.includes('secondary') ? '#7000ff' : '#ffffff' } as any} />
 
         <div className="relative p-4 space-y-4">
           {/* Executive Intelligence Header */}
@@ -597,7 +597,7 @@ function N8nPipelineProgress({ elapsedMs }: { elapsedMs: number }) {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export function CrisisOrchestrationPanel() {
-  const { state, orchestrate, reset } = useOrchestration();
+  const { state, orchestrate, reset, showSuccessToast, setShowSuccessToast } = useOrchestration();
 
   const [crisisType, setCrisisType] = useState(CRISIS_TYPES[0].value);
   const [severity, setSeverity] = useState("critical");
@@ -609,6 +609,14 @@ export function CrisisOrchestrationPanel() {
   const isDone = state.phase === "complete";
   const isError = state.phase === "error";
   const showConfig = state.phase === "idle" || isDone || isError;
+
+  // Auto-hide success toast
+  useEffect(() => {
+    if (showSuccessToast) {
+      const t = setTimeout(() => setShowSuccessToast(false), 4000);
+      return () => clearTimeout(t);
+    }
+  }, [showSuccessToast, setShowSuccessToast]);
 
   const elapsed = useElapsedTimer(isWaiting, state.startedAt);
   const elapsedMs = state.startedAt ? Date.now() - state.startedAt : 0;
@@ -625,6 +633,32 @@ export function CrisisOrchestrationPanel() {
 
   return (
     <GlassCard className="relative overflow-hidden border-primary/20">
+      {/* ── Success Toast ── */}
+      <AnimatePresence>
+        {showSuccessToast && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, x: "-50%" }}
+            animate={{ opacity: 1, y: 12, x: "-50%" }}
+            exit={{ opacity: 0, y: -20, x: "-50%" }}
+            className="absolute top-0 left-1/2 z-[100] flex items-center gap-3 px-4 py-2.5 rounded-xl border border-emerald-500/50 bg-black/80 backdrop-blur-xl shadow-[0_0_30px_rgba(16,185,129,0.2)]"
+          >
+            <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center">
+              <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[10px] font-black text-emerald-500 tracking-widest uppercase">Connection Verified</span>
+              <span className="text-[8px] font-mono text-gray-400">n8n webhook acknowledged request</span>
+            </div>
+            <button 
+              onClick={() => setShowSuccessToast(false)}
+              className="ml-2 p-1 hover:bg-white/5 rounded-lg transition-colors"
+            >
+              <XCircle className="w-3 h-3 text-gray-600" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Scanning line */}
       {isActive && (
         <motion.div
@@ -646,7 +680,7 @@ export function CrisisOrchestrationPanel() {
             </span>
             {/* Endpoint label */}
             <span className="hidden md:inline text-[8px] font-mono text-gray-700 px-1.5 py-0.5 border border-white/5 rounded">
-              POST localhost:5678/webhook/ghost-board-crisis
+              POST https://primary-production-016c.up.railway.app/webhook/ghost-board-crisis
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -843,7 +877,7 @@ export function CrisisOrchestrationPanel() {
                 <div className="relative z-10 border-t border-white/5 pt-3">
                   <CommandCenterRenderer content={state.report} />
                 </div>
-                
+
                 {/* Simulation Metadata Footer */}
                 <div className="relative z-10 pt-4 mt-2 border-t border-white/5 flex items-center justify-between text-[7px] font-mono text-gray-700 uppercase tracking-[0.2em]">
                   <div className="flex items-center gap-4">

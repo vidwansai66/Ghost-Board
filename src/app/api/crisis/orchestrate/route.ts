@@ -28,7 +28,7 @@ export const maxDuration = 180;
 
 // ─── n8n endpoint ─────────────────────────────────────────────────────────────
 const N8N_WEBHOOK = process.env.N8N_CRISIS_WEBHOOK_URL
-  ?? "https://primary-production-7c382.up.railway.app/webhook/ghost-board-crisis";
+  ?? "https://primary-production-016c.up.railway.app/webhook/ghost-board-crisis";
 
 // ─── Response shape returned to the frontend ──────────────────────────────────
 export interface OrchestrationResult {
@@ -266,7 +266,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
           ? "Cannot connect to n8n. Make sure n8n is running on localhost:5678."
           : isTimeout
             ? "n8n workflow timed out after 3 minutes. The workflow may still be running — check the n8n canvas."
-            : `Orchestration failed: ${message}`,
+            : message,
         latencyMs,
       },
       { status: 503 }
